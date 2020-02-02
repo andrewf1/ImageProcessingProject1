@@ -6,13 +6,17 @@
 bool isPixelInROI(int i, int j, int x, int y, int sx, int sy) {
 	cout << "in boolean function" << endl;
 	return i >= y &&
+		cout << "if1" << endl &&
 		i < (y + sy) &&
+		cout << "if2" << endl &&
 		j >= x &&
-		j < (x + sx);
+		cout << "if3" << endl &&
+		j < (x + sx) &&
+		cout << "if4" << endl;
 }
 
 double colorEuclideanDistance(color c1, color c2) {
-	cout << "calculating euci dist\t";
+	// cout << "calculating euci dist\t";
 	int red_part = c2.R - c1.R;
 	red_part *= red_part;
 	int green_part = c2.G - c1.G;
@@ -125,10 +129,15 @@ void utility::doubleThreshold(image& src, image& tgt, const vector<roi>& regions
 		for (int i = 0; i < temp_img.getNumberOfColumns(); i++) {
 			for (int j = 0; j < temp_img.getNumberOfRows(); j++) {
 				if (
+					// cout << "inside if " << endl &&
 					i >= y &&
+					// cout << "if1" << endl &&
 					i < (y + sy) &&
+					// cout << "if2" << endl &&
 					j >= x &&
-					j < (x + sx)
+					// cout << "if3" << endl &&
+					j < (x + sx) //&&
+					// cout << "if4" << endl
 				) {
 					int pixel = temp_img.getPixel(i, j);
 					if (
@@ -170,57 +179,67 @@ void utility::colorBinarization(image& src, image& tgt, const vector<roi>& regio
 	image temp_img;
 	temp_img.copyImage(src);
 	for (int r = 0; r < regions.size(); r++) {
-		cout << "r = " << r << endl;
+		// cout << "r = " << r << endl;
 		const int x = regions.at(r).x;
-		cout << "x = " << x << endl;
+		// cout << "x = " << x << endl;
 		const int y = regions.at(r).y;
-		cout << "y = " << y << endl;
+		// cout << "y = " << y << endl;
 		const int sx = regions.at(r).sx;
-		cout << "sx = " << sx << endl;
+		// cout << "sx = " << sx << endl;
 		const int sy = regions.at(r).sy;
-		cout << "sy = " << sy << endl;
+		// cout << "sy = " << sy << endl;
 		const int cR = regions.at(r).cR;
-		cout << "cR = " << cR << endl;
+		// cout << "cR = " << cR << endl;
 		const int cG = regions.at(r).cG;
-		cout << "cG = " << cG << endl;
+		// cout << "cG = " << cG << endl;
 		const int cB = regions.at(r).cB;
-		cout << "cB = " << cB << endl;
+		// cout << "cB = " << cB << endl;
 		const int TC = regions.at(r).TC;
-		cout << "TC = " << TC << endl;
+		// cout << "TC = " << TC << endl;
 		const int DC = regions.at(r).DC;
-		cout << "DC = " << DC << endl;
+		// cout << "DC = " << DC << endl;
 		color region_color = color(cR, cG, cB);
 
 		for (int i = 0; i < src.getNumberOfColumns(); i++) {
 			for (int j = 0; j < src.getNumberOfRows(); j++) {
-				cout << "beginning of inner loop" << endl;
+				// cout << "beginning of inner loop" << endl;
 				cout << "i = " << i << endl;
 				cout << "y = " << y << endl;
 				cout << "sy = " << sy << endl;
 				cout << "j = " << j << endl;
 				cout << "x = " << x << endl;
 				cout << "sx = " << sx << endl;
-				if (isPixelInROI(i, j, x, y, sx, sy)) {
-					cout << "inside region check" << endl;
+				if (
+					cout << "inside if " << endl &&
+					i >= y &&
+					cout << "if1" << endl &&
+					i < (y + sy) &&
+					cout << "if2" << endl &&
+					j >= x &&
+					cout << "if3" << endl &&
+					j < (x + sx) &&
+					cout << "if4" << endl
+				) {
+					// cout << "inside region check" << endl;
 					int srcRed = temp_img.getPixel(i, j, RED);
 					int srcGreen = temp_img.getPixel(i, j, GREEN);
 					int srcBlue = temp_img.getPixel(i, j, BLUE);
 					color src_color = color(srcRed, srcGreen, srcBlue);
 					double distance = colorEuclideanDistance(region_color, src_color);
-					cout << "calculated ecu dist" << endl;
+					// cout << "calculated ecu dist" << endl;
 					if (distance > TC) {
-						cout << "distance is > TC\t";
-						tgt.setPixel(i, j, /*RED,*/ MINRGB);
-						// tgt.setPixel(i, j, GREEN, MINRGB);
-						// tgt.setPixel(i, j, BLUE, MINRGB);
-						cout << "set pixel" << endl;
+						// cout << "distance is > TC\t";
+						tgt.setPixel(i, j, RED, MINRGB);
+						tgt.setPixel(i, j, GREEN, MINRGB);
+						tgt.setPixel(i, j, BLUE, MINRGB);
+						// cout << "set pixel" << endl;
 					}
 					else {
-						cout << "distance is <= TC\t";
+						// cout << "distance is <= TC\t";
 						tgt.setPixel(i, j, RED, temp_img.getPixel(i, j, RED) + DC);
 						tgt.setPixel(i, j, GREEN, temp_img.getPixel(i, j, GREEN) + DC);
 						tgt.setPixel(i, j, BLUE, temp_img.getPixel(i, j, BLUE) + DC);
-						cout << "set pixel" << endl;				
+						// cout << "set pixel" << endl;				
 					}
 				}
 				else {
@@ -231,15 +250,15 @@ void utility::colorBinarization(image& src, image& tgt, const vector<roi>& regio
 					tgt.setPixel(i, j, BLUE, temp_img.getPixel(i, j, BLUE));
 					cout << "set pixel" << endl;
 				}		
-				cout << "end of inner loop" << endl;
-				cout << "j = " << j << endl;
-				cout << "numRows = " << src.getNumberOfRows() << endl;
-				cout << "i = " << i << endl;
-				cout << "numCols = " << src.getNumberOfColumns() << endl;
+				// cout << "end of inner loop" << endl;
+				// cout << "j = " << j << endl;
+				// cout << "numRows = " << src.getNumberOfRows() << endl;
+				// cout << "i = " << i << endl;
+				// cout << "numCols = " << src.getNumberOfColumns() << endl;
 			}
-			cout << "end of outer loop" << endl;
+			// cout << "end of outer loop" << endl;
 		}
-		cout << "bout to copy image" << endl;
+		// cout << "bout to copy image" << endl;
 		temp_img.copyImage(tgt);
 	}
 }
