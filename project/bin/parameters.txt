@@ -1,0 +1,5 @@
+2
+0 0 100 300 100 150 100 150 100 80 20 5
+320 80 150 150 50 150 210 200 60 100 20 5
+baboon.pgm baboon_dt.pgm double_thresh
+flor.ppm flor_cb.ppm color_binar
