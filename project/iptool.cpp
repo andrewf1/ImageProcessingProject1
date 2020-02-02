@@ -25,6 +25,10 @@ int main (int argc, char** argv)
     if (fgets(str, MAXLEN, fp) != NULL) {
         pch = strtok(str, " ");
         num_regions = atoi(pch);
+        if (num_regions > 3) {
+            cout << "Only 3 ROI allowed" << endl;
+            exit(1);
+        }
     }
 
     // getting the regions

@@ -1,5 +1,10 @@
 2
 0 0 100 300 100 150 100 150 100 80 20 5
 320 80 150 150 50 150 210 200 60 100 20 5
-baboon.pgm baboon_dt.pgm double_thresh
-flor.ppm flor_cb.ppm color_binar
+park.pgm park_dt.pgm double_thresh
+ball.ppm ball_cb.ppm color_binar
+wine.ppm wine_cb.ppm color_binar
+park.pgm park_2d.pgm 2d_smooth
+baboon.pgm baboon_2d.pgm 2d_smooth
+baboon.pgm baboon_1d.pgm 1d_smooth
+park.pgm park_1d.pgm 1d_smooth

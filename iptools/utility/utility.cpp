@@ -126,28 +126,32 @@ void utility::doubleThreshold(image& src, image& tgt, const vector<roi>& regions
 		int sy = regions.at(r).sy;
 		int T1 = regions.at(r).T1;
 		int T2 = regions.at(r).T2;
-		for (int i = 0; i < temp_img.getNumberOfColumns(); i++) {
-			for (int j = 0; j < temp_img.getNumberOfRows(); j++) {
+		cout << "r = " << r << endl;
+		cout << "x = " << x << endl;
+		cout << "y = " << y << endl;
+		cout << "sx = " << sx << endl;
+		cout << "sy = " << sy << endl;
+		for (int i = 0; i < temp_img.getNumberOfRows(); i++) {
+			for (int j = 0; j < temp_img.getNumberOfColumns(); j++) {
 				if (
-					// cout << "inside if " << endl &&
 					i >= y &&
-					// cout << "if1" << endl &&
 					i < (y + sy) &&
-					// cout << "if2" << endl &&
 					j >= x &&
-					// cout << "if3" << endl &&
-					j < (x + sx) //&&
-					// cout << "if4" << endl
+					j < (x + sx)
 				) {
 					int pixel = temp_img.getPixel(i, j);
+					cout << "i = " << i << endl;
+					cout << "j = " << j << endl;
 					if (
 						pixel >= T1 &&
 						pixel <= T2
 					) {
 						tgt.setPixel(i, j, MAXRGB);
+						cout << "set pixel" << endl;
 					}
 					else {
 						tgt.setPixel(i, j, MINRGB);
+						cout << "set pixel" << endl;
 					}
 				}
 				else {
@@ -172,10 +176,9 @@ void utility::doubleThreshold(image& src, image& tgt, const vector<roi>& regions
 		
 	}
 }
-
 /*-----------------------------------------------------------------------**/
 void utility::colorBinarization(image& src, image& tgt, const vector<roi>& regions) {
-	tgt.resize(src.getNumberOfColumns(), src.getNumberOfRows());
+	tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
 	image temp_img;
 	temp_img.copyImage(src);
 	for (int r = 0; r < regions.size(); r++) {
@@ -203,52 +206,52 @@ void utility::colorBinarization(image& src, image& tgt, const vector<roi>& regio
 		for (int i = 0; i < src.getNumberOfColumns(); i++) {
 			for (int j = 0; j < src.getNumberOfRows(); j++) {
 				// cout << "beginning of inner loop" << endl;
-				cout << "i = " << i << endl;
-				cout << "y = " << y << endl;
-				cout << "sy = " << sy << endl;
-				cout << "j = " << j << endl;
-				cout << "x = " << x << endl;
-				cout << "sx = " << sx << endl;
+				// cout << "i = " << i << endl;
+				// cout << "y = " << y << endl;
+				// cout << "sy = " << sy << endl;
+				// cout << "j = " << j << endl;
+				// cout << "x = " << x << endl;
+				// cout << "sx = " << sx << endl;
 				if (
-					cout << "inside if " << endl &&
-					i >= y &&
-					cout << "if1" << endl &&
-					i < (y + sy) &&
-					cout << "if2" << endl &&
-					j >= x &&
-					cout << "if3" << endl &&
-					j < (x + sx) &&
-					cout << "if4" << endl
+					// cout << "inside if " << endl &&
+					j >= y &&
+					// cout << "if1" << endl &&
+					j < (y + sy) &&
+					// cout << "if2" << endl &&
+					i >= x &&
+					// cout << "if3" << endl &&
+					i < (x + sx) //&&
+					// cout << "if4" << endl
 				) {
 					// cout << "inside region check" << endl;
-					int srcRed = temp_img.getPixel(i, j, RED);
-					int srcGreen = temp_img.getPixel(i, j, GREEN);
-					int srcBlue = temp_img.getPixel(i, j, BLUE);
+					int srcRed = temp_img.getPixel(j, i, RED);
+					int srcGreen = temp_img.getPixel(j, i, GREEN);
+					int srcBlue = temp_img.getPixel(j, i, BLUE);
 					color src_color = color(srcRed, srcGreen, srcBlue);
 					double distance = colorEuclideanDistance(region_color, src_color);
 					// cout << "calculated ecu dist" << endl;
 					if (distance > TC) {
 						// cout << "distance is > TC\t";
-						tgt.setPixel(i, j, RED, MINRGB);
-						tgt.setPixel(i, j, GREEN, MINRGB);
-						tgt.setPixel(i, j, BLUE, MINRGB);
+						tgt.setPixel(j, i, RED, MINRGB);
+						tgt.setPixel(j, i, GREEN, MINRGB);
+						tgt.setPixel(j, i, BLUE, MINRGB);
 						// cout << "set pixel" << endl;
 					}
 					else {
 						// cout << "distance is <= TC\t";
-						tgt.setPixel(i, j, RED, temp_img.getPixel(i, j, RED) + DC);
-						tgt.setPixel(i, j, GREEN, temp_img.getPixel(i, j, GREEN) + DC);
-						tgt.setPixel(i, j, BLUE, temp_img.getPixel(i, j, BLUE) + DC);
+						tgt.setPixel(j, i, RED, temp_img.getPixel(j, i, RED) + DC);
+						tgt.setPixel(j, i, GREEN, temp_img.getPixel(j, i, GREEN) + DC);
+						tgt.setPixel(j, i, BLUE, temp_img.getPixel(j, i, BLUE) + DC);
 						// cout << "set pixel" << endl;				
 					}
 				}
 				else {
-					cout << "setting pixel to straight up regular\t";
+					// cout << "setting pixel to straight up regular\t";
 					// copy the pixel rgb values over to new image
-					tgt.setPixel(i, j, RED, temp_img.getPixel(i, j, RED));
-					tgt.setPixel(i, j, GREEN, temp_img.getPixel(i, j, GREEN));
-					tgt.setPixel(i, j, BLUE, temp_img.getPixel(i, j, BLUE));
-					cout << "set pixel" << endl;
+					tgt.setPixel(j, i, RED, temp_img.getPixel(j, i, RED));
+					tgt.setPixel(j, i, GREEN, temp_img.getPixel(j, i, GREEN));
+					tgt.setPixel(j, i, BLUE, temp_img.getPixel(j, i, BLUE));
+					// cout << "set pixel" << endl;
 				}		
 				// cout << "end of inner loop" << endl;
 				// cout << "j = " << j << endl;
@@ -265,11 +268,105 @@ void utility::colorBinarization(image& src, image& tgt, const vector<roi>& regio
 
 /*-----------------------------------------------------------------------**/
 void utility::smoothing2d(image& src, image& tgt, const vector<roi>& regions) {
+	tgt.resize(src.getNumberOfRows(), src.getNumberOfColumns());
+	image temp_img;
+	temp_img.copyImage(src);
 	
+	for (int r = 0; r < regions.size(); r++) {
+		int x = regions.at(r).x;
+		int y = regions.at(r).y;
+		int sx = regions.at(r).sx;
+		int sy = regions.at(r).sy;
+		int WS = regions.at(r).WS;
+		int radius = (WS - 1)/2;
+		int new_pixel = 0;
+
+		for (int i = 0; i < temp_img.getNumberOfRows(); i++) {
+			for (int j = 0; j < temp_img.getNumberOfColumns(); j++) {
+				if (
+					i >= y &&
+					i < (y + sy) &&
+					j >= x &&
+					j < (x + sx)
+				) {
+					for (int k = 0; k <= radius * radius; k++) {
+						for (int l = 0; l <= radius * radius; l++) {
+							new_pixel += temp_img.getPixel(i + k - radius, j + l - radius);
+						}
+					}
+					new_pixel = (new_pixel/(WS * WS));
+					tgt.setPixel(i, j, new_pixel);
+				}
+				else {
+					tgt.setPixel(i, j, checkValue(temp_img.getPixel(i, j)));
+				}
+			}
+		}
+		temp_img.copyImage(tgt);
+	}
 }
 
 /*-----------------------------------------------------------------------**/
 void utility::smoothing1d(image& src, image& tgt, const vector<roi>& regions) {
+	tgt.resize(src.getNumberOfColumns(), src.getNumberOfRows());
+	image temp_img;
+	temp_img.copyImage(src);
+
+	for (int r = 0; r < regions.size(); r++) {
+		int x = regions.at(r).x;
+		int y = regions.at(r).y;
+		int sx = regions.at(r).sx;
+		int sy = regions.at(r).sy;
+		int WS = regions.at(r).WS;
+		int radius = (WS - 1)/2;
+		image tgt_buff;
+		tgt_buff.resize(temp_img.getNumberOfRows(), temp_img.getNumberOfColumns());
+
+		for (int i = 0; i< temp_img.getNumberOfColumns(); i++) {
+			for (int j = 0; j < temp_img.getNumberOfRows(); j++) {
+				if (
+					i >= y &&
+					i < (y + sy) &&
+					j >= x &&
+					j < (x + sx)
+				) {
+					int newVal = 0;
+					for (int n = 0; n <= radius * radius; n++) {
+						newVal += temp_img.getPixel(i + n - radius, j);
+					}
+					newVal /= WS;
+					tgt_buff.setPixel(i, j, newVal);
+				}
+				else {
+					tgt_buff.setPixel(i, j, checkValue(temp_img.getPixel(i, j)));
+				}
+			}
+		}
+
+		for (int i = 0; i< temp_img.getNumberOfColumns(); i++) {
+			for (int j = 0; j < temp_img.getNumberOfRows(); j++) {
+				if (
+					i >= y &&
+					i < (y + sy) &&
+					j >= x &&
+					j < (x + sx)
+				) {
+					int newVal = 0;
+					for (int n = 0; n <= radius * radius; n++) {
+						newVal += tgt_buff.getPixel(i, j + n - radius);
+					}
+
+					newVal /= WS; // WS + 1
+					tgt.setPixel(i, j, newVal);
+				}
+				else {
+					tgt.setPixel(i, j, checkValue(temp_img.getPixel(i, j)));
+				}				
+			}
+		}
+
+		temp_img.copyImage(tgt);
+	}
 	
 }
 
