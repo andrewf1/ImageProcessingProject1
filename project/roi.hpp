@@ -1,8 +1,6 @@
 #ifndef ROI_HPP
 #define ROI_HPP
 
-// #include "../iptools/core.h" 
-
 class roi 
 {
 public:
@@ -11,7 +9,6 @@ public:
         int T1_i, int T2_i,
         int cR_i, int cG_i, int cB_i, int TC_i, int DC_i,
         int WS_i) {
-            // img_in = img_src;
             x = x_i;
             y = y_i;
             sx = sx_i;
@@ -27,7 +24,6 @@ public:
         };
     ~roi() = default;
     
-    // image img_in, img_out;
     int x;
     int y;
     int sx;

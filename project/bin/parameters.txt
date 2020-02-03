@@ -3,7 +3,7 @@
 320 80 150 150 50 150 210 200 60 100 20 5
 park.pgm park_dt.pgm double_thresh
 lena.pgm lena_dt.pgm double_thresh
-park.pgm park_dt.pgm double_thresh
+camera.pgm camera_dt.pgm double_thresh
 ball.ppm ball_cb.ppm color_binar
 wine.ppm wine_cb.ppm color_binar
 lena.ppm lena_cb.ppm color_binar
