@@ -2,9 +2,13 @@
 0 0 100 300 100 150 100 150 100 80 20 5
 320 80 150 150 50 150 210 200 60 100 20 5
 park.pgm park_dt.pgm double_thresh
+lena.pgm lena_dt.pgm double_thresh
+park.pgm park_dt.pgm double_thresh
 ball.ppm ball_cb.ppm color_binar
 wine.ppm wine_cb.ppm color_binar
+lena.ppm lena_cb.ppm color_binar
 park.pgm park_2d.pgm 2d_smooth
-baboon.pgm baboon_2d.pgm 2d_smooth
-baboon.pgm baboon_1d.pgm 1d_smooth
-park.pgm park_1d.pgm 1d_smooth
+lena.pgm lena_2d.pgm 2d_smooth
+floor.pgm floor_2d.pgm 2d_smooth
+lena.pgm lena_1d.pgm 1d_smooth
+camera.pgm camera_1d.pgm 1d_smooth
